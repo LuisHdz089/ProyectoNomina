@@ -1,0 +1,1 @@
+CALL sp_login_nomina('admin', '12345');

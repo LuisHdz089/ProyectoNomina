@@ -1,0 +1,1 @@
+SET DEFAULT ROLE 'rol_admin_nomina' TO 'usuario'@'host';
