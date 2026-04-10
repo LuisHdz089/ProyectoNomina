@@ -1,27 +1,23 @@
 DELIMITER //
 
+DROP PROCEDURE IF EXISTS proyectoabd.sp_sincronizar_auditoria_ddl //
+
 CREATE PROCEDURE proyectoabd.sp_sincronizar_auditoria_ddl()
 BEGIN
-    -- Insertamos en tu tabla log_auditoria lo que encontramos en el log general
-    INSERT INTO proyectoabd.log_auditoria (
-        fecha_hora, 
-        operacion, 
-        objeto_afectado, 
-        query_ejecutada, 
-        usuario_bd
-    )
-    SELECT 
-        fecha, 
-        'DDL_DETECTED', 
-        'ESQUEMA', 
-        comando_ejecutado, 
-        terminal
-    FROM nomina.v_rastreo_ddl;
-
-    -- OPCIONAL: Limpiar el log general para que no explote el disco
-    -- SET GLOBAL general_log = 'OFF';
-    -- TRUNCATE TABLE mysql.general_log;
-    -- SET GLOBAL general_log = 'ON';
+INSERT INTO proyectoabd.log_auditoria (
+    fecha_hora, 
+    usuario_bd,
+    query_ejecutada, -- Columna destino
+    operacion,
+    objeto_afectado
+)
+SELECT 
+    fecha,
+    terminal,
+    CONVERT(comando_ejecutado USING utf8mb4), -- Fuente de la vista
+    'DDL_DETECTED',
+    'ESQUEMA'
+FROM proyectoabd.v_rastreo_ddl;
 END //
 
 DELIMITER ;
