@@ -1,0 +1,23 @@
+1. Preparar el Entorno Fisico
+* Define una ubicación para los datos. En mi caso, yo utilice D:\mysql_instancia2\data.
+
+2. Configuracion del Archivo *my.ini*
+* Crea un archivo de texto llamado my.ini en la raíz de tu nueva carpeta.
+* Copia el archivo el contenido del my.ini
+
+3. Inicializacion del Diccionario de datos
+* Navegamos: cd C:\Program Files\MySQL\MySQL Server 8.4\bin
+* Inicializamos: .\mysqld --defaults-file=D:\mysql_instancia2\my.ini --initialize-insecure
+
+4. Registro e Inicio del Servicio
+* Instalamos: .\mysqld --install MySQL2 --defaults-file=D:\mysql_instancia2\my.ini
+* Iniciamos: net start MySQL2
+
+5. Configuracion de Seguridad y Superusuario
+* Conectar: mysql -u root -P 3307
+* Cambiar contraseña: ALTER USER 'root'@'localhost' IDENTIFIED BY 'NuevaContrasena';
+* Refrescar: FLUSH PRIVILEGES;
+
+6. Verificacion de Funcionamiento
+* Puertos activos: netstat -ano | findstr "3306 3307"
+* Procesos en ejecucion: tasklist | findstr mysqld
