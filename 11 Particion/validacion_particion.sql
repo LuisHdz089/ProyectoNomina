@@ -1,0 +1,3 @@
+SELECT PARTITION_NAME, TABLE_ROWS 
+FROM information_schema.PARTITIONS 
+WHERE TABLE_NAME = 'log_auditoria' AND TABLE_SCHEMA = 'proyectoabd';
